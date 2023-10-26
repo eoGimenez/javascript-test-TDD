@@ -8,3 +8,6 @@ Estare armando una app a base de TDD:
 
 - Law 3.
     You may not write more production code than sufficient to make the failing unit test pass.
+
+
+Buscar libreria user-event para evitar usar el fireEvent.
