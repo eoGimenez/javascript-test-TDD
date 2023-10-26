@@ -12,6 +12,11 @@ const equalSign = '='
 
 const Calculator = () => {
 	const [value, setValue] = useState('')
+
+	const createHandlerNum = (num) => () => {
+		setValue(value.concat(num))
+	}
+
 	return (
 		<section>
 			<h1>Calculator</h1>
@@ -20,12 +25,7 @@ const Calculator = () => {
 				{rows.map((row, idx) => (
 					<div key={idx} role='row'>
 						{row.map((num) => (
-							<button
-								key={num}
-								onClick={() => {
-									setValue(num)
-								}}
-							>
+							<button key={num} onClick={createHandlerNum(num)}>
 								{num}
 							</button>
 						))}
@@ -92,5 +92,21 @@ describe('Calculator', () => {
 
 		const input = screen.getByRole('textbox')
 		expect(input.value).toBe('1')
+	})
+
+	it('Should user input after clicking several numbers', () => {
+		render(<Calculator />)
+
+		const one = screen.getByText('1')
+		fireEvent.click(one)
+
+		const two = screen.getByText('2')
+		fireEvent.click(two)
+
+		const tree = screen.getByText('3')
+		fireEvent.click(tree)
+
+		const input = screen.getByRole('textbox')
+		expect(input.value).toBe('123')
 	})
 })
