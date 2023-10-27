@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { evaluate } from 'mathjs'
+import { e, evaluate } from 'mathjs'
 
 export const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
@@ -11,14 +11,12 @@ export const equalSign = '='
 
 export const Calculator = () => {
 	const [value, setValue] = useState('')
-	// const [operator, setOperator] = useState('')
 
 	const createHandlerClick = (op) => () => {
+		console.log(value)
+		if (op === '=') return setValue(evaluate(value))
 		setValue(value.concat(op))
 	}
-	// const handleEqual = (num, operator) => () => {
-	// 	setValue()
-	// }
 
 	return (
 		<section>
@@ -39,13 +37,7 @@ export const Calculator = () => {
 						{operation}
 					</button>
 				))}
-				<button
-					onClick={() => {
-						setValue(evaluate(value))
-					}}
-				>
-					{equalSign}
-				</button>
+				<button onClick={createHandlerClick(equalSign)}>{equalSign}</button>
 			</div>
 		</section>
 	)
